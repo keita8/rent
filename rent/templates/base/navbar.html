@@ -1,0 +1,157 @@
+{% load static %}
+
+
+<!-- Top header start -->
+<header class="top-header th-2 top-header-bg">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 col-md-8 col-sm-7">
+                <div class="list-inline">
+                    <a href="tel:+212624232775"><i class="fa fa-phone"></i>+212 624 232 775</a>
+                    <a href="mailto:abdulkabirkeita825@gmail.com"><i class="fa fa-envelope"></i> abdulkabirkeita825@gmail.com</a>
+                    <a href="#"><i class="fa fa-clock-o"></i>Lun - Sam: 8:00am - 6:00pm</a>
+                </div>
+            </div>
+
+<!--             <div class="col-lg-4 col-md-4 col-sm-5">
+                <ul class="top-social-media pull-right">
+                    <li>
+                        <a href="login.html" class="sign-in"><i class="fa fa-sign-in"></i> Login</a>
+                    </li>
+                    <li>
+                        <a href="signup.html" class="sign-in"><i class="fa fa-user"></i> Register</a>
+                    </li>
+                </ul>
+            </div> -->
+
+        </div>
+    </div>
+</header>
+<!-- Top header end -->
+
+<!-- Main header start -->
+<header class="main-header sticky-header header-with-top">
+    <div class="container">
+        <nav class="navbar navbar-expand-lg navbar-light">
+            <a class="navbar-brand company-logo" href="{% url 'index' %}">
+                <img src="{% static 'img/logos/car.png' %}" alt="logo">
+            </a>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="fa fa-bars"></span>
+            </button>
+            <div class="navbar-collapse collapse w-100" id="navbar">
+                <ul class="navbar-nav ml-auto">
+                    <li class="nav-item">
+                        <a 
+                        {% if '/' == request.path %}
+                        class="nav-link active " 
+                        {% else %}
+                        class="nav-link" 
+                        {% endif %}
+                        href="{% url 'index' %}">
+                            Accueil
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a
+                        {% if 'voitures' in request.path %}
+                            class="nav-link active"
+                        {% else %}
+                            class = "nav-link"
+                        {% endif %}
+
+                         href="{% url 'cars' %}">
+                            Voitures
+                        </a>
+                    </li>
+<!--                     <li class="nav-item">
+                        <a class="nav-link" href="/carhouse/about.html">
+                            About
+                        </a>
+                    </li> -->
+                    <li class="nav-item">
+                        <a 
+
+                        {% if 'services' in request.path %}
+                            class="nav-link active"
+                        {% else %}
+                            class="nav-link"
+                        {% endif %}
+
+                         href="{% url 'services' %}">
+                            Services
+                        </a>
+                    </li>
+
+                    <li class="nav-item">
+                        <a {% if 'contact' in request.path %} class="nav-link active" {% else %} class="nav-link" {% endif %}
+                            href="{% url 'contact:about' %}">
+                            A propos
+                        </a>
+                    </li>
+
+
+                    <!-- {% if request.user.is_authenticated %}
+                        
+                    <li class="nav-item ">
+                        <a 
+                        {% if 'dashboard' in request.path %}
+                            class="nav-link active"
+                        {% else %}
+                            class="nav-link"
+                        {% endif %}
+
+
+                        href="{% url 'dashboard' %}" class="nav-link">
+                            <i class="fa fa-user-circle-o" aria-hidden="true"></i>  Dashboard
+                        </a>
+                    </li>
+                    <li class="nav-item ">
+                        <a href="{% url 'logout' %}" class="nav-link">
+                            <i class="fa fa-sign-out" aria-hidden="true"></i>  Se déconnecter
+                        </a>
+                    </li>
+
+
+                    {% else %}
+                        
+                    
+                    <li class="nav-item">
+                        <a 
+
+                        {% if 'login' in request.path %}
+                            class="nav-link active"
+                        {% else %}
+                            class="nav-link"
+                        {% endif %}
+
+                        href="{% url 'login' %}" class="sign-in nav-link"><i class="fa fa-sign-in"></i> Connexion</a>
+                    </li>
+
+                    <li class="nav-item">
+                        <a 
+
+                        {% if 'register' in request.path %}
+                            class="nav-link active"
+                        {% else %}
+                            class="nav-link"
+                        {% endif %}
+
+                        href="{% url 'register' %}" class="sign-in nav-link"><i class="fa fa-user"></i> Inscription</a>
+                    </li> 
+
+
+                    {% endif %} -->
+
+
+                    <li class="nav-item dropdown ">
+                        <a href="#full-page-search" class="nav-link h-icon">
+                            <i class="fa fa-search"></i>
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </nav>
+    </div>
+</header>
+<!-- Main header end -->

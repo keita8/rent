@@ -1,0 +1,282 @@
+{% extends "base/base.html" %}
+{% load static %}
+{% load humanize %}
+
+{% block title %}
+	Recherche
+{% endblock title %}
+
+{% block content %}
+	
+
+<!-- Banner start -->
+<div class="sub-banner overview-bgi">
+    <div class="container breadcrumb-area">
+        <div class="breadcrumb-areas">
+            <h1>Resultats de votre recherche</h1>
+            <ul class="breadcrumbs">
+                <li><a href="{% url 'index' %}">Accueil</a></li>
+                <li class="active">Resultats</li>
+            </ul>
+        </div>
+    </div>
+</div>
+<!-- Banner end -->
+
+<!-- Search box 3 start -->
+<div class="search-box-3 sb-7 bg-active">
+    <div class="container">
+        <div class="search-area-inner">
+            <div class="search-contents">
+                <form method="GET" action="{% url 'search' %}">
+                    <div class="row">
+
+                        <div class="col-lg-3 col-md-6 col-sm-6 col-6">
+                            <div class="form-group">
+                                <select class="selectpicker search-fields" name="modele">
+                                    <option disabled="disabled" selected="selected">Modèle</option>
+
+                                    {% for model in model_search %}
+                                       <option value="{{ model }}">{{ model|safe }}</option>
+                                    {% endfor %}
+                                </select>
+                            </div>
+                        </div>
+
+                        <div class="col-lg-3 col-md-6 col-sm-6 col-6">
+                            <div class="form-group">
+                                <select class="selectpicker search-fields" name="year">
+                                    <option disabled="disabled" selected="selected">Année</option>
+                                    {% for year in year_search  %}
+                                        <option value="{{ year }}">{{ year }}</option>
+                                    {% endfor %}
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-lg-3 col-md-6 col-sm-6 col-6">
+                            <div class="form-group">
+                                <select class="selectpicker search-fields" name="body_style">
+                                    <option disabled="disabled" selected="selected">Type de voiture</option>
+                                    {% for body in body_style_search %}
+                                        <option value="{{ body }}">{{ body|safe }}</option>
+                                    {% endfor %}
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col-lg-3 col-md-6 col-sm-6 col-6">
+                            <div class="form-group">
+                                <select class="selectpicker search-fields" name="transmission">
+                                    <option disabled="disabled" selected="selected">Transmission</option>
+                                    {% for transmission in transmission_search %}
+                                        <option value="{{ transmission }}" >{{ transmission }}</option>
+                                    {% endfor %}
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col-lg-3 col-md-6 col-sm-6 col-6">
+                            <div class="form-group">
+                                <div class="range-slider">
+                                    <div data-min="0" data-max="100000000" data-unit="GNF" data-min-name="min_price" data-max-name="max_price" class="range-slider-ui ui-slider" aria-disabled="false"></div>
+                                    <div class="clearfix"></div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-lg-3 col-md-6 col-sm-6 col-6">
+                            <div class="form-group">
+                                <button class="btn btn-block button-theme btn-md">
+                                    <i class="fa fa-search"></i>Chercher
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Search box 3 end -->
+
+<!-- Featured car start -->
+<div class="featured-car content-area">
+    <div class="container">
+        <!-- Main title -->
+        {% if cars %}
+            
+        <div class="main-title">
+            <h1>{{cars_count}} voiture{{ cars_count|pluralize }}  <span>disponible{{ cars_count|pluralize }} </span></h1>
+        </div>
+        <div class="row">
+
+            {% for car in cars  %}
+                
+            <div class="col-lg-4 col-md-6">
+                <div class="car-box">
+                    <div class="car-thumbnail">
+                        <a href="{{ car.get_url }}" class="car-img">
+                            {% if car.for_sale %}
+                            <div class="tag">A vendre</div>
+                            {% endif %}
+                            <img class="d-block w-100" src="{{ car.photo.url }}" alt="car" style="min-height: 262px; max-height: 262px;">
+                            <div class="facilities-list clearfix">
+                                <ul>
+                                    <li>
+                                        <span><i class="flaticon-way"></i></span>{{ car.miles|intcomma }} KM
+                                    </li>
+                                    <li>
+                                        <span><i class="flaticon-calendar-1"></i></span>{{ car.year }}
+                                    </li>
+                                    <li>
+                                        <span><i class="flaticon-manual-transmission"></i></span>{{ car.transmission|safe }}
+                                    </li>
+                                </ul>
+                            </div>
+                        </a>
+                        <div class="carbox-overlap-wrapper">
+                            <div class="overlap-box">
+                                <div class="overlap-btns-area">
+                                    <a class="overlap-btn" data-toggle="modal" data-target="#carOverviewModal">
+                                        <i class="fa fa-eye-slash"></i>
+                                    </a>
+                                    <div class="car-magnify-gallery">
+                                        <a href="{{ car.photo.url }}" class="overlap-btn" data-sub-html="<h4>{{ car.car_title|safe }}</h4><p></p>">
+                                            <i class="fa fa-expand"></i>
+                                            <img class="hidden" src="{{ car.photo.url }}" alt="hidden-img">
+                                        </a>
+
+                                        <a href="{{ car.image1.url }}" class="hidden" data-sub-html="<h4>{{ car.car_title|safe }}</h4>">
+                                            <img class="hidden" src="{{ car.image1.url }}" alt="hidden-img">
+                                        </a>
+                                        <a href="{{ car.image2.url }}" class="hidden" data-sub-html="<h4>{{ car.car_title|safe }}</h4>">
+                                            <img class="hidden" src="{{ car.image2.url }}" alt="hidden-img">
+                                        </a>
+                                        <a href="{{ car.image3.url }}" class="hidden" data-sub-html="<h4>{{ car.car_title|safe }}</h4>">
+                                            <img class="hidden" src="{{ car.image3.url }}" alt="hidden-img">
+                                        </a>
+                                        <a href="{{ car.image4.url }}" class="hidden" data-sub-html="<h4>{{ car.car_title|safe }}</h4>">
+                                            <img class="hidden" src="{{ car.image4.url }}" alt="hidden-img">
+
+
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="detail">
+                        <h1 class="title">
+                            <a href="{{ car.get_url }}">{{ car.car_title|safe }}</a>
+                        </h1>
+                        <div class="location">
+                            <a href="car-details.html">
+                                <i class="flaticon-pin"></i>{{ car.city|safe }}
+                            </a>
+                        </div>
+                    </div>
+                    <div class="footer clearfix">
+                        <div class="pull-left ratings days">
+                            <p class="cartype">{{ car.body_style }}</p>
+                        </div>
+                        <div class="pull-right">
+                            <p class="price">{{ car.price|floatformat|intcomma }} GNF</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+            <div class="car-model-2">
+                <div class="modal fade" id="carOverviewModal" tabindex="-1" role="dialog" aria-labelledby="carOverviewModalLabel" aria-hidden="true">
+                    <div class="modal-dialog modal-lg" role="document">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <div class="modal-title" id="carOverviewModalLabel">
+                                    <h4>{{ car.car_title|safe }}</h4>
+                                    <h5><i class="flaticon-pin"></i>{{ car.city|safe }}</h5>
+                                </div>
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
+                            </div>
+                            <div class="modal-body">
+                                <div class="row modal-raw">
+                                    <div class="col-lg-6 modal-left">
+                                        <div class="item active">
+                                            <img src="{{ car.photo.url }}" alt="best-car" class="img-fluid modalLabel-1">
+                                            <img src="{{ car.image1.url }}" alt="best-car" class="img-fluid modalLabel-2">
+
+                                            <!-- <div class="sobuz">
+                                                <div class="price-box" style="padding-bottom: 5px;">
+                                                    <span class="del-2">{{ car.price|floatformat|intcomma }} GNF</span>
+                                                </div>
+                                                <div class="">
+                                                    <a href="{{ car.get_url }}" class="btn btn-md btn-round btn-theme">Convertible</a>
+                                                </div>
+                                            </div> -->
+
+
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-6 modal-right">
+                                        <div class="modal-right-content">
+                                            <section>
+                                                <h3>Fonctionnalités</h3>
+                                                <div class="features">
+                                                    <ul class="bullets">
+                                                        {% for feature in car.features %}
+                                                        
+                                                        <li>{{ feature }}</li>
+                                                            
+                                                        {% endfor %}
+                                                    </ul>
+                                                </div>
+                                            </section>
+                                            <section>
+                                                <h3>Aperçu</h3>
+                                                <ul class="bullets">
+                                                    <li>{{ car.modele }}</li>
+                                                    <li>{{ car.year }}</li>
+                                                    <li>{{ car.condition }}</li>
+                                                    <li>{{ car.price|floatformat|intcomma }} GNF</li>
+                                                    <li>{{ car.car_title|safe }}</li>
+<!--                                                     <li>2020</li>
+                                                    <li>Brand New</li>
+                                                    <li>$178,000</li> -->
+                                                </ul>
+                                            </section>
+                                            <div class="description">
+                                                <h3>Description</h3>
+                                                <p>{{ car.description|safe }}</p>
+                                                <a href="{{ car.get_url }}" class="btn btn-md btn-round btn-theme">Detail</a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+            {% endfor %}
+
+        </div>
+
+        {% else %}
+
+        <div class="main-title">
+            <h1>Aucun resultat trouvé<span></span></h1>
+        </div>
+
+        {% endif %}
+
+    </div>
+</div>
+<!-- Featured car end -->
+
+
+
+
+{% endblock content %}
