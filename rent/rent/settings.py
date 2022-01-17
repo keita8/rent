@@ -26,7 +26,7 @@ environ.Env.read_env(env_file=str(BASE_DIR / "rent" / ".env"))
 
 SECRET_KEY = env("SECRET_KEY")
 DEBUG = env.bool("DEBUG")
-ALLOWED_HOSTS = ['127.0.0.1' ,'https://keitarentcar.pythonanywhere.com/']
+ALLOWED_HOSTS = ['keitarentcar.pythonanywhere.com']
 # ALLOWED_HOSTS = env.list('ALLOWED_HOSTS')
 
 
